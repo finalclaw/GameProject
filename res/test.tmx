@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="10" tilewidth="64" tileheight="64" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="19" height="12" tilewidth="64" tileheight="64" nextobjectid="1">
  <tileset firstgid="1" name="PathAndObjects" tilewidth="64" tileheight="64" tilecount="64" columns="8">
   <image source="PathAndObjects.png" width="512" height="512"/>
  </tileset>
- <layer name="Tile Layer 1" width="10" height="10">
+ <tileset firstgid="65" name="floor_dirt1" tilewidth="64" tileheight="64" tilecount="6" columns="3">
+  <image source="floor_dirt1.png" width="192" height="128"/>
+ </tileset>
+ <tileset firstgid="71" name="Floor_floor" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="Floor_floor.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="72" name="Boss_floor" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="Boss_floor.png" width="64" height="64"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="19" height="12">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAAxNnYGAQH8WDBgMAOyHX4pABAAA=
+   H4sIAAAAAAAAA2NgoD7woACPmjVq1lA1ixoAANy/mvKQAwAA
   </data>
  </layer>
 </map>
