@@ -70,10 +70,10 @@ public class Play extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
 			throws SlickException {
 		map.render(0,0);
-		if (isInput){
+		if (isInput && timerGoing){
 			g.drawImage(green,120,0);
 			g.drawImage(green,cX,cY);
-		} else {
+		} else if(timerGoing) {
 		g.drawImage(chara,cX,cY);
 		}
 		if (l >= 5) {
@@ -94,12 +94,10 @@ public class Play extends BasicGameState {
 		g.setFont(Necro);
 		g.drawString("Beats : " + beats, 184, 12);
 		g.drawString("Lives : " + l, 184, 32);
-		if(!musicStart){
-//		g.drawString(Double.toString(different), 184, 52);
-//		g.drawString("max range: " + beatsCurrent[beats+1],184,72);
-//		g.drawString("test: " + beatsCurrent[0],184,92);
+		g.drawString("Counter : " + different, 184, 52);
+//		g.drawString("beatsCurrent : " + beatsCurrent[bCounter], 184, 72);
+		g.drawString("isInput : " + isInput, 184, 92);
 		
-		}
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
@@ -112,15 +110,15 @@ public class Play extends BasicGameState {
 			timerGoing = true;
 			musicStart = false;
 			sysTime = System.nanoTime();
-			
 			}
 		if(timerGoing){
+			
 			currentTime = (double) ((System.nanoTime() - sysTime)/1000000.0);
 			different = currentTime;
 			if (l==-1){
 //				gc.exit();
 			}
-				if(different <= beatsCurrent[bCounter] + beatRange && different >= beatsCurrent[bCounter] - beatRange){
+				if(different <= beatsCurrent[bCounter] + beatRange && different >= beatsCurrent[bCounter] - beatRange && beats >= 0){
 					isInput = true;
 					oneTime = false;
 					start = true;
@@ -128,12 +126,11 @@ public class Play extends BasicGameState {
 						lives = false;
 						stop = false;
 						}
-					} else {
-						if(start) {
-							if(!oneTime && beats > 0){
-								bCounter++;
-								oneTime = true;
-							}
+					} else if(beats > -1){
+								if(!oneTime){
+									bCounter++;
+									oneTime = true;
+								}
 							inputOnce = true;
 							isInput = false;
 							stop = true;
@@ -141,10 +138,10 @@ public class Play extends BasicGameState {
 								lives = true;
 								l=l-1;
 							}
-						}
 					}
 				if(different >= beatsCurrent[beats+1] - 10){
 					beats++;
+
 					isInput = true;
 					}
 				
@@ -152,7 +149,7 @@ public class Play extends BasicGameState {
 		
 			Input input = gc.getInput();
 		
-		if(input.isKeyPressed(Input.KEY_W)) {
+		if(input.isKeyPressed(Input.KEY_W)&& beats > 0) {
 			if(inputOnce){
 				inputOnce = false;
 				if(isInput){
@@ -205,7 +202,21 @@ public class Play extends BasicGameState {
 		if(input.isKeyPressed(Input.KEY_Q)){
 			gc.exit();
 		}
-
+		if(input.isKeyPressed(Input.KEY_ESCAPE)){
+			sbg.enterState(0);
+			m.stop();
+			start = false;
+			timerGoing = false;
+			musicStart = true;
+			inputOnce = true;
+			l = 5;
+			bCounter = 0;
+			beats = -1;
+			cX = 256;
+			cY = 256;
+			firstInput = false;
+			isInput = false;
+		}
 		
 	}
 
